@@ -1,0 +1,78 @@
+import javax.swing.*;
+
+public class PizzaOrderSystem {
+    private JPanel panel1;
+    private JComboBox<String> pizzaSizeChoice;
+    private JComboBox<String> extraCheeseChoice;
+    private JButton calculateButton;
+    private JLabel totalLabel;
+    private JCheckBox mushroomsCheckBox;
+    private JCheckBox pepperoniCheckBox;
+    private JCheckBox onionsCheckBox;
+
+    public PizzaOrderSystem() {
+        panel1.setName("panel1");
+        pizzaSizeChoice.setName("pizzaSizeChoice");
+        extraCheeseChoice.setName("extraCheeseChoice");
+        mushroomsCheckBox.setName("mushroomsCheckBox");
+        pepperoniCheckBox.setName("pepperoniCheckBox");
+        onionsCheckBox.setName("onionsCheckBox");
+        calculateButton.setName("calculateButton");
+        totalLabel.setName("totalLabel");
+
+        pizzaSizeChoice.insertItemAt("Choose Size...", 0);
+        pizzaSizeChoice.setSelectedItem("Choose Size...");
+
+        extraCheeseChoice.insertItemAt("Choose Extra Cheese...", 0);
+        extraCheeseChoice.setSelectedItem("Choose Extra Cheese...");
+
+        totalLabel.setText("Please select your options");
+
+        calculateButton.addActionListener(e -> {
+            double total = 0.0;
+
+            String size = (String) pizzaSizeChoice.getSelectedItem();
+            String cheese = (String) extraCheeseChoice.getSelectedItem();
+
+            if ("Choose Size...".equals(size) || "Choose Extra Cheese...".equals(cheese)) {
+                totalLabel.setText("Error: Please select size and cheese!");
+                return;
+            }
+
+            if ("Small".equals(size)) {
+                total += 10.0;
+            } else if ("Medium".equals(size)) {
+                total += 15.0;
+            } else if ("Large".equals(size)) {
+                total += 20.0;
+            }
+
+            if (mushroomsCheckBox.isSelected()) {
+                total += 2.0;
+            }
+            if (pepperoniCheckBox.isSelected()) {
+                total += 2.0;
+            }
+            if (onionsCheckBox.isSelected()) {
+                total += 2.0;
+            }
+
+            if ("Yes".equals(cheese)) {
+                total += 3.0;
+            }
+
+            totalLabel.setText("Total: $" + String.format("%.2f", total));
+        });
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Pizza Order System");
+        frame.setContentPane(new PizzaOrderSystem().panel1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.setSize(450, 320);
+
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+}
